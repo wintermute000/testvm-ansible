@@ -1,0 +1,39 @@
+---
+  - name: install test packages 
+    yum:
+      name: "{{item}}"
+      state: latest
+      update_cache: no
+    with_items:
+      - curl
+      - iperf
+      - nginx
+      - wireshark
+      - net-tools
+      - netcat
+      - vsftpd
+      - qemu-guest-agent
+      - spice-vdagent
+      - vim
+      - htop
+      - iptraf
+      
+  - name: Create a cisco non-privileged user
+    user:
+      name: cisco
+      password: $6$wr2gcj2uzv$cxIFOCD5HqBKdkSO8WrVOQzwx5cSnUPxHf70bn37jXACahL9lybcLIjEucFRtwx.wLTo9nUwPfo7i1Fqr27WB0
+      state: present
+      shell: /bin/bash       # Defaults to /bin/bash
+      system: no             # Defaults to no
+      createhome: yes        # Defaults to yes
+      home: /home/cisco  # Defaults to /home/<username>
+
+  - name: Copy VSFTPD config file
+    copy:
+      src: files/vsftpd.conf
+      dest: /etc/vsftpd.conf
+    notify: Restart VSFTPD
+   
+
+
+    

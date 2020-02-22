@@ -1,0 +1,7 @@
+---
+#tasks:
+  - debug: var=ansible_hostname
+  - name: capture output of id command
+    command: id -un
+    register: id
+  - debug: var=id.stdout

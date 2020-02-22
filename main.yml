@@ -1,0 +1,29 @@
+---
+- hosts: servers
+  become: true
+#  vars_files:
+#   - ./vars/passwords.yml
+#  gather_facts: True
+  roles:
+   - role: configure-all 
+     tags: ["servers"] 
+
+- hosts: testhosts
+  become: true
+  roles:
+    - role: configure-testhosts
+      tags: ["test"]
+
+- hosts: yanghosts
+  become: true
+  roles:
+    - role: configure-yanghosts
+      tags: ["yang"]
+
+- hosts: sdwantesthosts
+  become: true
+  roles:
+    - role: configure-sdwan-hosts
+      tags: ["sdwan"] 
+
+

@@ -1,0 +1,72 @@
+---
+  - name: install EPEL extra packages repo and software collections
+    yum:
+      name: "{{item}}"
+      state: latest
+      update_cache: no
+    with_items:
+      - epel-release
+      - centos-release-scl
+
+  - name: install YDK dependencies
+    yum:
+      name: "{{item}}"
+      state: latest
+      update_cache: no
+    with_items:
+      - https://devhub.cisco.com/artifactory/rpm-ydk/0.7.1/libydk-0.7.1-1.x86_64.rpm
+      - devtoolset-4-gcc
+      - devtoolset-4-gcc-c++
+      - devtoolset-4-gcc-gdb-plugin.x86_64
+      - devtoolset-4-gcc-gfortran.x86_64
+      - devtoolset-4-gcc-plugin-devel.x86_64
+      - libssh-devel
+      - libxslt-devel
+      - gcc-c++
+      - python-devel
+      - cmake3
+      - python-pip
+      - which
+      - make
+      - sudo
+
+  - name: create symlink to gcc
+    file:
+      src: /opt/rh/devtoolset-4/root/usr/bin/gcc
+      dest: /usr/bin/cc
+      state: link
+      force: yes
+
+  - name: create symlink to c++
+    file:
+      src: /opt/rh/devtoolset-4/root/usr/bin/g++
+      dest: /usr/bin/c++
+      state: link
+      force: yes
+
+  - name: copy python requirements
+    copy: src=files/requirements.txt dest=/tmp/requirements.txt
+
+  - name: install python requirements
+    pip:
+      requirements: /tmp/requirements.txt
+
+  - name: install ncclient and YDK base
+    pip:
+      name: "{{item}}"
+    with_items:
+      - ncclient
+      - ydk
+
+  - name: install YDK models using required workaround
+    pip:
+      name: "{{item}}"
+      extra_args: --install-option="--install-purelib=/usr/lib64/python2.7/site-packages" --no-deps
+    with_items:
+      - ydk-models-ietf
+      - ydk-models-openconfig
+      - ydk-models-cisco-ios-xr
+      - ydk-models-cisco-ios-xe
+     
+
+

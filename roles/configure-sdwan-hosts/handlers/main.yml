@@ -1,0 +1,7 @@
+---
+# handlers file for configure-sdwan-hosts
+
+  - name: restart VSFTPD
+    service: 
+      name: vsftpd 
+      state: restarted
