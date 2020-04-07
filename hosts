@@ -4,6 +4,7 @@ test2
 yangdesk
 testvm-velo
 testvm-viptela
+zpaconnector
 
 [yanghosts]
 yangdesk
@@ -16,3 +17,5 @@ test2
 testvm-velo
 testvm-viptela
 
+[zpahosts]
+zpaconnector

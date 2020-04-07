@@ -27,3 +27,8 @@
       tags: ["sdwan"] 
 
 
+- hosts: zpahosts
+  become: true
+  roles:
+    - role: configure-zpa-connectors
+      tags: ["zpa"]

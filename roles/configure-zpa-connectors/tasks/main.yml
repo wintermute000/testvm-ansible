@@ -1,0 +1,27 @@
+---
+  - name: Add ZPA repo
+    yum_repository:
+      name: ZPA
+      description: ZPA repo
+      baseurl: https://yum.private.zscaler.com/yum/el7
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: https://yum.private.zscaler.com/gpg
+
+# tasks file for configure-all
+  - name: install updates
+    yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+
+  - name: install test packages 
+    yum:
+      name: "{{item}}"
+      state: latest
+      update_cache: no
+    with_items:
+      - zpa-connector
+
+
+    

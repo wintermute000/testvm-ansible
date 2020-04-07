@@ -17,6 +17,8 @@
       - vim
       - htop
       - iptraf
+      - gnome-desktop
+      - wget
       
   - name: Create a cisco non-privileged user
     user:
